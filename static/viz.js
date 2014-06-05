@@ -2,10 +2,13 @@
  * @fileoverview Description of this file.
  */
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function(e) {
   var audioContext = new (window.audioContext || window.webkitAudioContext)();
   var sampler = new Visualizer(audioContext);
-  document.querySelector('button').addEventListener('click', function() {
-    sampler.togglePlayback();
+  window.addEventListener('keyup', function(e) {
+    if (e.keyCode == 32 /* space bar */) {
+      sampler.togglePlayback();
+    }
   });
 });
+
