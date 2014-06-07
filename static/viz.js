@@ -75,19 +75,24 @@ AudioPlayer.prototype.togglePause = function() {
 function Visualizer() {
   this.canvas = document.querySelector('canvas');
   this.drawContext = this.canvas.getContext('2d');
+
+  this.canvas.addEventListener('resize', this.resetCanvasSize.bind(this));
+  this.resetCanvasSize();
 }
 
-Visualizer.prototype.draw = function(freqBinCount, freqs, times) {
-  this.height = this.canvas.offsetHeight;
-  this.width = this.canvas.offsetWidth;
+Visualizer.prototype.resetCanvasSize = function() {
+  this.canvas.height = this.canvas.offsetHeight;
+  this.canvas.width = this.canvas.offsetWidth;
+};
 
-  this.drawContext.clearRect(0, 0, this.width, this.height);
+Visualizer.prototype.draw = function(freqBinCount, freqs, times) {
+  this.drawContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
   for (var i = 0; i < freqBinCount; i++) {
     var value = freqs[i];
     var percent = value / 256;
-    var barHeight = this.height * percent;
-    var yoffset = this.height - barHeight - 1;
-    var barWidth = this.width / freqBinCount;
+    var barHeight = this.canvas.height * percent;
+    var yoffset = this.canvas.height - barHeight - 1;
+    var barWidth = this.canvas.width / freqBinCount;
     var hue = i / freqBinCount * 360;
 
     this.drawContext.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
