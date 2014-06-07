@@ -105,10 +105,14 @@ window.addEventListener('load', function(e) {
   var viz = new Visualizer();
   var player = new AudioPlayer(audioContext, viz.draw.bind(viz));
 
-  window.mediaElement = player.audioElement;
-  window.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
-  window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-  window.castReceiverManager.start();
+  var channelHandler = new cast.receiver.ChannelHandler('viz');
+  var receiver = cast.receiver.CastReceiverManager.getInstance();
+  var messageBus = receiver.getCastMessageBus('urn:x-cast:gmusic.viz.attempts');
+  messageBus.onMessage = function(e) {
+    console.log("Message type: " + e.type + " from: " + e.senderId + " data: " + e.data);
+    player.togglePause();
+  };
+  receiver.start();
 
   window.addEventListener('keyup', function(e) {
     if (e.keyCode == 32 /* space bar */) {
