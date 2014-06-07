@@ -105,7 +105,6 @@ window.addEventListener('load', function(e) {
   var viz = new Visualizer();
   var player = new AudioPlayer(audioContext, viz.draw.bind(viz));
 
-  var channelHandler = new cast.receiver.ChannelHandler('viz');
   var receiver = cast.receiver.CastReceiverManager.getInstance();
   var messageBus = receiver.getCastMessageBus('urn:x-cast:gmusic.viz.attempts');
   messageBus.onMessage = function(e) {
@@ -119,5 +118,7 @@ window.addEventListener('load', function(e) {
       player.togglePause();
     }
   });
+  
+  player.togglePause();
 });
 
