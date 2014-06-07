@@ -18,10 +18,10 @@ img.centered {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -50px;
-  margin-left: -50px;
-  height: 100px;
-  width: 100px;
+  margin-top: -16px;
+  margin-left: -16px;
+  height: 32px;
+  width: 32px;
 }
 
 img.hidden {
